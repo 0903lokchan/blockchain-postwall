@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<h2>{{ address }}</h2>
+<br>
+
+{% if posts %}
+{% for post in posts %}
+    {% include "postwall/_postPY.html" %}
+{% endfor %}
+{% endif %}
+
+{% endblock app_content %}
+

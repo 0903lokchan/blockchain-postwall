@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block scripts %}
+{{ super() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script type="{{ url_for('static', filename='web3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='truffle-contract.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    {{ moment.include_moment() }}
+{% endblock scripts %}
+
+{% block app_content %}
+
+<div class="row">
+    <div class="col-md-4">
+        <textarea id="newPostText" rows="4" cols="50"></textarea><br>
+        <button class="btn btn-default btn-air" type="button">Air</button>
+    </div>
+</div>
+
+{% include 'postwall/_postJS.html' %}
+
+{% endblock app_content %}
