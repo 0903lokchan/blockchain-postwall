@@ -5,8 +5,9 @@ from web3 import Web3, HTTPProvider
 
 from app import app
 
-postwall_address = '0x63b3f36cCe39d147a640f385c096B60dE2F068Ac'
-postwall_abi = json.load(open('./app/static/Postwall.json'))['abi']
+postwall_artifact = json.load(open('./app/static/Postwall.json'))
+postwall_address = postwall_artifact["networks"]["5777"]["address"]
+postwall_abi = postwall_artifact['abi']
 
 # check connection and get enode
 w3 = Web3(HTTPProvider('HTTP://127.0.0.1:7545'))

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+{{ super() }}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/landing.css') }}">
+{% endblock scripts %}
+
+{% block app_content %}
+<div class="body-container w-80">
+    <article id="intro" class="">
+        <h1>Welcome to the Wall!</h1>
+        <p>
+            In here, the only wall you have is the post wall where you catch up with everyone's updates on the network. No obscure policy or algorithm hidden behind the wall. It is all determined by you.
+        </p>
+        <p>
+            The Wall makes use of blockchain technologies to store and manipulate its data. It means that your contents posted onto the Wall are securely kept on a public network, that nobody may modify your messages.
+        </p>
+    </article>
+    <div id="instruction" class="">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h1>Get Started</h1>
+            </div>
+            <div class="card-body text-center mb-4">
+                <p class="card-text">
+                    Using the Wall is simple and nice. Just follow the 3 steps:
+               </p>
+            </div>
+        </div>
+
+        <div id="step1" class="card mb-4">
+            <div class="card-header">
+                <h2>1.Login to a blockchain wallet</h2>
+            </div>
+            <div class="card-body text-center">
+                <p class="card-text">
+                    To get started, make sure that a blockchain wallet is installed on your browser. We recommend 
+                    <a href="">Metamask</a> as it is used in our development process to ensure best compatibility. 
+                    For instruction on getting started with Metamask please read <a href="">this</a>.
+                    The wall will ask for permission to connect to your blockchain wallet account on start.
+                </p>
+            </div>
+        </div>
+
+        <div id="step2" class="card mb-4">
+            <div class="card-header">
+                <h2>2.Make a post</h2>
+            </div>
+            <div class="card-body p-2">
+                <p class="card-text">
+                    Once logged in, all the posts will appear on your homepage and you may make use of the text box on the top to make a post.
+                </p>
+            </div>
+        </div>
+
+        <div id="step3" class="card mb-4">
+            <div class="card-header">
+                <h2>3.Confirm transaction</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Whenever you make a post, you must make a blockchain transaction via your account. Your blockchain 
+                    wallet will automatically prompt you for confirmation of transaction.
+                </p>
+            </div>
+        </div>
+
+        <div id="step4" class="card mb-4">
+            <div class="card-header">
+                <h2>Done!</h2>
+            </div>
+            <div class="card-body p-2">
+                <p class="card-text">
+                    Once the transaction is processed by the blockchain, your post will be visible to everyone!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock app_content %}

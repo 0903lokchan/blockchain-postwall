@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+<div class="body-container">
+    <article id="table-of-contents">
+        <h1>How to use the Wall</h1>
+        <p>
+            In here, the only wall you have is the post wall where you catch up with everyone's updates on the network. No obscure policy or algorithm hidden behind the wall. It is all determined by you.
+        </p>
+        <p>
+            The Wall makes use of blockchain technologies to store and manipulate its data. It means that your contents posted onto the Wall are securely kept on a public network, that nobody may modify your messages.
+        </p>
+    </article>
+    <article id="instruction">
+        <h1>Get Started</h1>
+        <p>
+            To get started, make sure that a blockchain wallet is installed on your browser. We recommend <a href="">Metamask</a> as it is used in our development process to ensure best compatibility. For instruction on getting started with Metamask please read <a href="">this</a>.
+            The wall will ask for permission to connect to your blockchain wallet account on start. Once logged in, you may make posts, view posts and view your profile with your blockchain account.
+            Whenever you make a post, you will have to make a blockchain transaction via your account. Your blockchain wallet will automatically prompt you for confirmation of transaction. Once the transaction is finished, your post will be on air on the blockchain!
+        </p>
+    </article>
+</div>
+{% endblock app_content %}

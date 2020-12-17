@@ -1,11 +1,16 @@
-const postwallAddress = '0x63b3f36cCe39d147a640f385c096B60dE2F068Ac';
-
-function Post(id, timestamp, author, content) {
-    this.id = id;
-    this.timestamp = timestamp;
-    this.author = author;
-    this.content = content;
+class Post {
+    constructor(id, timestamp, author, content) {
+        this.id = id;
+        this.timestamp = timestamp;
+        this.author = author;
+        this.content = content;
+    }
 }
+
+//const postwallAddress = '0x2Cb89D70a11F2C266134D164aeF23BbCcbDE037E';
+const examplePost = new Post(id=0, timestamp=123456, author="example author", content="example post");
+
+
 
 App = {
     web3Provider: null,
@@ -40,36 +45,45 @@ App = {
         }
         web3 = new Web3(App.web3Provider);
 
+        //set href of profile button on navbar
+        const linkProfile = document.querySelector('#link-profile');
+        linkProfile.href = linkProfile.href.slice(0, -42) + App.web3Provider.selectedAddress;
+
         return App.initContract();
     },
 
-    initContract: function() {
-        $.getJSON("static/Postwall.json", function(data) {
+    initContract: async function() {
+        $.getJSON("static/Postwall.json", 
+        async function(data) {
+            console.log("Successfully loaded contract artifact");
+            console.log("Instantiating contract...");
             // Instantiate contract
             let PostwallArtifact = data;
-            App.contracts.Postwall = TruffleContract(PostwallArtifact);
-            App.contracts.Postwall.setProvider(App.web3Provider);
-      
-            // Retrieve posts from contract
-            return App.retrievePosts();
-          });
-      
-          return App.bindEvents();
-    },
+            let PostwallContract = TruffleContract(PostwallArtifact);
 
-    bindEvents: function() {1
-    },
+            PostwallContract.setProvider(App.web3Provider);
+            try {
+                App.contracts.postwall = await PostwallContract.deployed();
+                console.log("Successfully instantiated contract");
+                return App.retrievePosts();
+            } catch (error) {
+                console.error("Unable to fetch deployed contract");
+                console.error(error);
 
-    clearPost: function () {
-      let postRow = $('#postsRow');
-      postRow.empty();  
+                // Try to instantiate contract with constant address
+                App.contracts.postwall = await PostwallContract.at(postwallAddress);
+            } finally {
+                // Retrieve posts from contract
+                return App.retrievePosts();
+            }
+        });
     },
 
     reloadPosts: function () {
         let postRow = $('#postsRow');
         let postTemplate = $('#postTemplate');
 
-        App.clearPost();
+        postRow.empty();
 
         for (i = 0; i < App.posts.length; i++){
             postTemplate.find('#postUsername').text(App.posts[i].author);
@@ -80,36 +94,36 @@ App = {
         }
     },
 
-    retrievePosts: function() {
-        let postRow = $('#postsRow');
-        let postTemplate = $('#postTemplate');
-        let postwallInstance;
+    retrievePosts: async function() {
         let followedUser;
+        let raw_posts;
 
-        // retrieve the deployed instance of contract Postwall
-        App.contracts.Postwall.deployed().then(instance => {
-            postwallInstance = instance;
-            App.contracts.postwallinst = postwallInstance;
+        // Retieve posts data from contract
+        try {
+            raw_posts = await App.contracts.postwall.getPosts();
+        } catch (error) {
+            console.error("Unable to retrieve posts data from contract");
+            console.error(error);
 
-            return postwallInstance.getPosts.call();
-        }).then((posts) => {
-                let raw_posts = posts;
-                App.posts = [];
-                for (let i = 0; i < raw_posts[0].length; i++) {
-                    App.posts.unshift(new Post(
-                        id=raw_posts[0][i],
-                        timestamp=raw_posts[1][i],
-                        author=raw_posts[2][i],
-                        content=raw_posts[3][i]));
-                }
-                
-                // Filter out posts made by followed users
+            // Put example posts data instead
+        } finally {
+            // clear posts cache
+            App.posts = [];
 
-                // Show filtered posts
-                App.reloadPosts()
-            }).catch((err) => {
-                console.log(err.message);
-            });
+            // comprehend raw posts data from contract
+            for (let i = 0; i < raw_posts[0].length; i++) {
+                App.posts.unshift(new Post(
+                    id=raw_posts[0][i],
+                    timestamp=raw_posts[1][i],
+                    author=raw_posts[2][i],
+                    content=raw_posts[3][i]));
+            }
+            
+            // Filter out posts made by followed users
+
+            // Show filtered posts
+            App.reloadPosts()
+        }        
     },
 
     createPost: function() {
@@ -123,11 +137,14 @@ App = {
             if (err) {console.log(err.message);}
             let user = res[0];
             // Call createPost method on Postwall contract
-            App.contracts.Postwall.deployed().then(instance => {
-                postwallInstance = instance;
+            // App.contracts.Postwall.deployed()
+            // .then(instance => {
+            //     postwallInstance = instance;
 
-                return postwallInstance.createPost(postContent, {from: user});
-            }).then(result => {
+            //     return postwallInstance.createPost(postContent, {from: user});
+            // })
+            App.contracts.postwall.createPost(postContent, {from: user})
+            .then(result => {
                 console.log("A post is successfully created.");
                 return App.retrievePosts();
             })
@@ -136,6 +153,4 @@ App = {
     }
 };
 
-$(function() {
-    $(window).load(() => App.init());
-});
+$(window).on("load", () => App.init());
