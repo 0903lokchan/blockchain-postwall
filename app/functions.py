@@ -1,27 +1,26 @@
 import json
 import datetime
-from eth_account import account
 from web3 import Web3, HTTPProvider
 
-from app import app
-
 postwall_artifact = json.load(open('./app/static/Postwall.json'))
-postwall_address = postwall_artifact["networks"]["5777"]["address"]
+postwall_address = postwall_artifact["networks"]["3"]["address"]
 postwall_abi = postwall_artifact['abi']
 
 # check connection and get enode
-w3 = Web3(HTTPProvider('HTTP://127.0.0.1:7545'))
+w3 = Web3(HTTPProvider('https://ropsten.infura.io/v3/c9402e213aa94b979dc80abc164c109d'))
 print(f"web3 provider is connected: {w3.isConnected()}")
 
 # instantiate postwall contract
 contract = w3.eth.contract(abi=postwall_abi, address=postwall_address)
 
 def get_posts (user = None):
+    
     # get post data from contract Postwall
     posts_raw = contract.functions.getPosts().call()
 
     # tranform post data into json format
     posts_json = []
+    posts_display = []
     post_ids = posts_raw[0]
     post_timestamp = posts_raw[1]
     post_author = posts_raw[2]
@@ -35,11 +34,14 @@ def get_posts (user = None):
     posts_json.reverse()
 
     if user == None:
-        post_display = posts_json
+        posts_display = posts_json
     else:
-        post_display = []
+        user = user.lower()
         for post in posts_json:
-            if post["author"] == user:
-                post_display.append(post)
+            if post["author"].lower() == user:
+                posts_display.append(post)
     
-    return post_display
+    return posts_display
+
+if __name__ == "__main__":
+    get_posts()

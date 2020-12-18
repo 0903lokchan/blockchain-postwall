@@ -7,7 +7,6 @@ class Post {
     }
 }
 
-//const postwallAddress = '0x2Cb89D70a11F2C266134D164aeF23BbCcbDE037E';
 const examplePost = new Post(id=0, timestamp=123456, author="example author", content="example post");
 
 
@@ -59,19 +58,18 @@ App = {
             console.log("Instantiating contract...");
             // Instantiate contract
             let PostwallArtifact = data;
-            let PostwallContract = TruffleContract(PostwallArtifact);
+            App.contracts.Postwall = TruffleContract(PostwallArtifact);
 
-            PostwallContract.setProvider(App.web3Provider);
+            App.contracts.Postwall.setProvider(App.web3Provider);
             try {
-                App.contracts.postwall = await PostwallContract.deployed();
+                App.contracts.postwall = await App.contracts.Postwall.deployed();
                 console.log("Successfully instantiated contract");
-                return App.retrievePosts();
             } catch (error) {
                 console.error("Unable to fetch deployed contract");
                 console.error(error);
 
                 // Try to instantiate contract with constant address
-                App.contracts.postwall = await PostwallContract.at(postwallAddress);
+                App.contracts.postwall = await App.contracts.Postwall.at(postwallAddress);
             } finally {
                 // Retrieve posts from contract
                 return App.retrievePosts();
@@ -98,17 +96,12 @@ App = {
         let followedUser;
         let raw_posts;
 
+        // clear posts cache
+        App.posts = [];
+
         // Retieve posts data from contract
         try {
             raw_posts = await App.contracts.postwall.getPosts();
-        } catch (error) {
-            console.error("Unable to retrieve posts data from contract");
-            console.error(error);
-
-            // Put example posts data instead
-        } finally {
-            // clear posts cache
-            App.posts = [];
 
             // comprehend raw posts data from contract
             for (let i = 0; i < raw_posts[0].length; i++) {
@@ -121,6 +114,15 @@ App = {
             
             // Filter out posts made by followed users
 
+        } catch (error) {
+            console.error("Unable to retrieve posts data from contract");
+            console.error(error);
+
+            // Put example posts data instead
+            App.posts.unshift(examplePost);
+
+        } finally {
+            
             // Show filtered posts
             App.reloadPosts()
         }        
@@ -137,12 +139,6 @@ App = {
             if (err) {console.log(err.message);}
             let user = res[0];
             // Call createPost method on Postwall contract
-            // App.contracts.Postwall.deployed()
-            // .then(instance => {
-            //     postwallInstance = instance;
-
-            //     return postwallInstance.createPost(postContent, {from: user});
-            // })
             App.contracts.postwall.createPost(postContent, {from: user})
             .then(result => {
                 console.log("A post is successfully created.");
