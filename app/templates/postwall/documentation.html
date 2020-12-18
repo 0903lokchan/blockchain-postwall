@@ -1,23 +1,211 @@
 {% extends 'base.html' %}
 
+{% block scripts %}
+{{ super() }}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/base.css') }}">
+{% endblock scripts %}
+
 {% block app_content %}
 <div class="body-container">
-    <article id="table-of-contents">
-        <h1>How to use the Wall</h1>
-        <p>
-            In here, the only wall you have is the post wall where you catch up with everyone's updates on the network. No obscure policy or algorithm hidden behind the wall. It is all determined by you.
-        </p>
-        <p>
-            The Wall makes use of blockchain technologies to store and manipulate its data. It means that your contents posted onto the Wall are securely kept on a public network, that nobody may modify your messages.
-        </p>
-    </article>
-    <article id="instruction">
-        <h1>Get Started</h1>
-        <p>
-            To get started, make sure that a blockchain wallet is installed on your browser. We recommend <a href="">Metamask</a> as it is used in our development process to ensure best compatibility. For instruction on getting started with Metamask please read <a href="">this</a>.
-            The wall will ask for permission to connect to your blockchain wallet account on start. Once logged in, you may make posts, view posts and view your profile with your blockchain account.
-            Whenever you make a post, you will have to make a blockchain transaction via your account. Your blockchain wallet will automatically prompt you for confirmation of transaction. Once the transaction is finished, your post will be on air on the blockchain!
-        </p>
+    <h1>Get Started</h1>
+    <article id="documentation" class="w-80">
+        <div class="card my-4">
+            <div class="card-header">
+                <h1>Connect to Blockchain wallet</h1>
+            </div>
+            <div class="card-body text-justify">
+                <div class="card-text">
+                    <p>
+                        To start using Rosetta on Chain, you need to log into a Blockchain network with a 
+                                Blockchain wallet app. At the moment, the app only works on Ropsten testnet. For 
+                                wallet applications, we recommend using Metamask for stable performance as it is 
+                                used in our development processes.
+                    </p>
+                </div>
+                <div class="card my-4">
+                    <div class="card-header text-left">
+                        <h2>Metamask</h2>
+                    </div>
+                    <div class="card-body text-justify">
+                        <div class="card-text">
+                            <p>
+                                Metamask is a blockchain wallet app that stores and manages your blockchain accounts, 
+                                and secures your accounts by passing your account details to blockchain apps without 
+                                giving out your credentials. For more information about Metamask, please visit their 
+                                <a href="https://metamask.io/">official site</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-4">
+                    <div class="card-header text-left">
+                        <h2>Setting up Metamask</h2>
+                    </div>
+                    <div class="card-body text-justify">
+                        <div class="card-text">
+                            <p>
+                                To use Metamask you need to install it on your browser. Installation instructions are 
+                                accessible <a href="https://metamask.io/download.html">here</a>. If you don't have an 
+                                account yet, create a blockchain account following 
+                                <a href="https://metamask.zendesk.com/hc/en-us/articles/360015289452-How-to-Create-Additional-MetaMask-Wallets">
+                                these instructions</a>. If you have one, read <a href="https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-Account">
+                                this</a> to import your account.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-4">
+                    <div class="card-header text-left">
+                        <h2>Ropsten testnet</h2>
+                    </div>
+                    <div class="card-body text-justify">
+                        <div class="card-text">
+                            <p>
+                                At present, Rosetta on Chain only supports Ropsten testnet, a blockchain network for 
+                                testing blockchain applications. For detail about the network, visit 
+                                <a href="https://karl.tech/intro-guide-to-ethereum-testnets/">here</a>. Make sure you 
+                                have switched to the testnet on your wallet before using Rosetta on Chain.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-4">
+                    <div class="card-header text-left">
+                        <h2>Getting Token</h2>
+                    </div>
+                    <div class="card-body text-justify">
+                        <div class="card-text">
+                            <p>
+                                Before you can make a post on Rosetta on Chain, you must have some tokens to make 
+                                transactions. To obtain tokens on Ropsten testnet, follow 
+                                <a href="https://support.mycrypto.com/how-to/getting-started/where-to-get-testnet-ether">
+                                these instructions</a> to get some from faucets. 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card my-4">
+            <div class="card-header">
+                <h1>Using Rosetta on Chain</h1>
+            </div>
+            <div class="card-body text-justify">
+                <div class="card-text">
+                    <p>
+                        Rosetta looks like a typical social network and is easy to use. Below are some brief 
+                        descriptions of the main functions available at the moment.
+                    </p>
+                </div>
+                <div class="card my-4">
+                    <div class="card-header text-left">
+                        <h2>Homepage</h2>
+                    </div>
+                    <div class="card-body text justify">
+                        <div class="card-text"></div>
+                        <div class="card">
+                            <div class="card-header text-left">
+                                <h3>Viewing posts</h3>
+                            </div>
+                            <div class="card-body text-justify">
+                                <div class="card-text">
+                                    <p>
+                                        By default, Rosetta on Chain shows all the posts made by every user. It is to 
+                                        maximize the opportunity of all messages to reach the public. In a later 
+                                        version, a focus mode will be introduced to only view followed users' content.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-left">
+                                <h3>Writing posts</h3>
+                            </div>
+                            <div class="card-body text-justify">
+                                <div class="card-text">
+                                    <p>
+                                        Because of the high storage cost of blockchains, the app only supports textual 
+                                        content at the moment. Whenever you create a post, you must confirm transaction 
+                                        from your blockchain wallet as uploading content counts as transactions to the 
+                                        blockchain. No additional cost will be incurred except the transaction fee paid 
+                                        to the miners.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-4">
+                    <div class="card-header text-left">
+                        <h2>Profile</h2>
+                    </div>
+                    <div class="card-body text justify">
+                        <div class="card-text">
+                            <p>
+                                The app provides personal profile view where you may read all the content a user has uploaded.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-left">
+                                <h3>Viewing your profile</h3>
+                            </div>
+                            <div class="card-body text-justify">
+                                <div class="card-text">
+                                    <p>
+                                        To access your profile, click on the "profile" button on the navigation bar. 
+                                        The app will show you the profile of the selected account on your wallet.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-left">
+                                <h3>Viewing others profile</h3>
+                            </div>
+                            <div class="card-body text-justify">
+                                <div class="card-text">
+                                    <p>
+                                        To view others' profile, click on the username on the posts on your homepage.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card my-4">
+            <div class="card-header">
+                <h1>Creating posts</h1>
+            </div>
+            <div class="card-body text-justify">
+                <div class="card my-4">
+                    <div class="card-header text-left">
+                        <h2>Transaction confirmation</h2>
+                    </div>
+                    <div class="card-body text-justify">
+                        <p>
+                            To successfully upload a post, you must confirm a transaction from your wallet application. 
+                            This is to make a request to the blockchain to process your content upload. A toll will be 
+                            taken by the miners on the blockchain in order to handle your request.
+                        </p>
+                    </div>
+                </div>
+                <div class="card my-4">
+                    <div class="card-header text-left">
+                        <h2>Waiting for handling</h2>
+                    </div>
+                    <div class="card-body text-justify">
+                        <p>
+                            Unlike traditional social networks where making posts are almost instant, blockchain 
+                            networks take a relatively long time to handle any request. It could take a few minutes 
+                            before your message is broadcasted. With wallets like Metamask, you may check your 
+                            transaction status or speed it up by paying an extra toll.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </article>
 </div>
 {% endblock app_content %}

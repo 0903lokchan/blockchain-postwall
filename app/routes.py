@@ -6,7 +6,7 @@ from app.functions import get_posts
 
 @app.route('/')
 def landing():
-   return render_template('postwall/landing.html', title='Welcome to the Wall!')
+   return render_template('postwall/landing.html', title='Landing page')
 
 @app.route('/documentation')
 def documentation():

@@ -13,8 +13,8 @@
 
         {% block title %}
             <title>
-                {% if title %}{{ title }}
-                {% else %}The wall
+                {% if title %}{{"Rosetta on Chain - " + title }}
+                {% else %}Rosetta on Chain
                 {% endif %}
             </title>
         {% endblock title %}
@@ -26,7 +26,7 @@
     {% block navbar %}
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url_for('landing') }}">The Wall</a>
+                <a class="navbar-brand" href="{{ url_for('landing') }}">Rosetta on Chain</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -35,7 +35,7 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('homepage') }}">Homepage</a></li>
                         <li class="nav-item"><a class="nav-link" id="link-profile" href="{{ url_for('user', address='0x0000000000000000000000000000000000000000') }}">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('documentation') }}">How to use</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('documentation') }}">Get Started</a></li>
                     </ul>
                 </div>
             </div>

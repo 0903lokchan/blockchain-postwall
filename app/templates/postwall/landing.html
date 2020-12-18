@@ -2,79 +2,73 @@
 
 {% block scripts %}
 {{ super() }}
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/landing.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/base.css') }}">
 {% endblock scripts %}
 
 {% block app_content %}
 <div class="body-container w-80">
     <article id="intro" class="">
-        <h1>Welcome to the Wall!</h1>
-        <p>
-            In here, the only wall you have is the post wall where you catch up with everyone's updates on the network. No obscure policy or algorithm hidden behind the wall. It is all determined by you.
-        </p>
-        <p>
-            The Wall makes use of blockchain technologies to store and manipulate its data. It means that your contents posted onto the Wall are securely kept on a public network, that nobody may modify your messages.
-        </p>
-    </article>
-    <div id="instruction" class="">
-        <div class="card mb-4">
+        <div class="card my-4">
             <div class="card-header">
-                <h1>Get Started</h1>
+                <h1>Rosetta on Chain</h1>
             </div>
             <div class="card-body text-center mb-4">
                 <p class="card-text">
-                    Using the Wall is simple and nice. Just follow the 3 steps:
+                    Throughout human history, people try to make long-lasting records of important messages: knots, 
+                    engravings, books, disks. Leaving messages for the future is a core value of humanity, yet none 
+                    of the attempts succeeds.
+                </p>
+                <p class="card-text">
+                    Blockchain is a breakthrough in human recording technologies. With the aid of it, a new way to 
+                    store critical information is found. Rosetta on Chain is an interface built on top of a set of 
+                    algorithms residing on a public blockchain, that saves messages of yours on a publicly owned 
+                    domain. This makes the data you upload to be imperishable... as long as the Internet stands.        
+                </p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>How does it work?</h2>
+            </div>
+            <div class="card-body text-center mb-4">
+                <p class="card-text">
+                    Rosetta on Chain is a prototype of a new form of data storage. It is not only a web application. 
+                    It interacts with a publicly owned set of algorithms on a blockchain that does no more than 
+                    storing and serving data its users upload. It ensures that all the messages from the users are 
+                    kept original and untouched.
                </p>
             </div>
         </div>
 
-        <div id="step1" class="card mb-4">
+        <div class="card mb-4">
             <div class="card-header">
-                <h2>1.Login to a blockchain wallet</h2>
+                <h2>What Blockchain really is? How does it help?</h2>
             </div>
             <div class="card-body text-center">
                 <p class="card-text">
-                    To get started, make sure that a blockchain wallet is installed on your browser. We recommend 
-                    <a href="">Metamask</a> as it is used in our development process to ensure best compatibility. 
-                    For instruction on getting started with Metamask please read <a href="">this</a>.
-                    The wall will ask for permission to connect to your blockchain wallet account on start.
+                    Blockchain is a kind of computer networks that collaborates in as swarm intelligence. That means 
+                    every worker in the network plays an equal role and there is no centre of the network. In the use 
+                    of data storage, it means that the data stored on it is securely distributed. Every bit of data 
+                    will remain permanent and immutable as long as the blockchain survives.
                 </p>
             </div>
         </div>
 
-        <div id="step2" class="card mb-4">
+        <div class="card mb-4">
             <div class="card-header">
-                <h2>2.Make a post</h2>
+                <h2>What purpose is this of?</h2>
             </div>
             <div class="card-body p-2">
                 <p class="card-text">
-                    Once logged in, all the posts will appear on your homepage and you may make use of the text box on the top to make a post.
+                    Rosetta on Chain is a perfect solution for leaving important messages to the public, as your 
+                    announcements will not be altered, censored or perished. Rosetta on Chain also ensures wide reach 
+                    of your messages since it in default broadcasts every post to every user. The toll fee nature of 
+                    blockchain systems also encourages users on Rosetta on Chain to put important messages on the 
+                    blockchain, so you will not be flooded by insignificant daily posts.
                 </p>
             </div>
         </div>
-
-        <div id="step3" class="card mb-4">
-            <div class="card-header">
-                <h2>3.Confirm transaction</h2>
-            </div>
-            <div class="card-body">
-                <p class="card-text">
-                    Whenever you make a post, you must make a blockchain transaction via your account. Your blockchain 
-                    wallet will automatically prompt you for confirmation of transaction.
-                </p>
-            </div>
-        </div>
-
-        <div id="step4" class="card mb-4">
-            <div class="card-header">
-                <h2>Done!</h2>
-            </div>
-            <div class="card-body p-2">
-                <p class="card-text">
-                    Once the transaction is processed by the blockchain, your post will be visible to everyone!
-                </p>
-            </div>
-        </div>
-    </div>
+    </article>
 </div>
 {% endblock app_content %}
