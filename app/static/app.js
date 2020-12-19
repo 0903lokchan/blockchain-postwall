@@ -17,10 +17,6 @@ App = {
     posts: [],
 
     init: async function() {
-        // Initialize buttons
-        document.querySelector('.btn-air').onclick = function(event) {
-            App.createPost();
-        };
 
         return App.initWeb3();
     },
@@ -43,6 +39,17 @@ App = {
             App.web3Provider = new web3.providers.HttpProvider('http://localhost:7545');
         }
         web3 = new Web3(App.web3Provider);
+
+        
+
+        return App.initDOM();
+    },
+
+    initDOM: function(){
+        // Initialize buttons
+        document.querySelector('.btn-air').onclick = function(event) {
+            App.createPost();
+        };
 
         //set href of profile button on navbar
         const linkProfile = document.querySelector('#link-profile');
@@ -80,11 +87,13 @@ App = {
     reloadPosts: function () {
         let postRow = $('#postsRow');
         let postTemplate = $('#postTemplate');
+        let postUser;
 
         postRow.empty();
 
         for (i = 0; i < App.posts.length; i++){
-            postTemplate.find('#postUsername').text(App.posts[i].author);
+            postUser = postTemplate.find('#postUsername').text(App.posts[i].author);
+            postUser.attr('href', postUser.attr('href').slice(0, -42) + App.web3Provider.selectedAddress);
             postTemplate.find('#postTimestamp').text(moment.unix(App.posts[i].timestamp).fromNow());
             postTemplate.find('#postContent').text(App.posts[i].content);
 

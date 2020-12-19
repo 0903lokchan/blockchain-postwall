@@ -20,6 +20,10 @@ def homepage():
 
 @app.route('/user/<address>')
 def user(address):
+   if address == "0x0000000000000000000000000000000000000000":
+      return render_template('postwall/invalid_link.html', title='Invalid link')
+   
+   else:
     posts = get_posts(address)
 
     return render_template('postwall/user.html', title='Profile', address = address, posts = posts)
