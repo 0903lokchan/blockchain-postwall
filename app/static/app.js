@@ -15,6 +15,7 @@ App = {
     web3Provider: null,
     contracts: {},
     posts: [],
+    currentUser: null,
 
     init: async function() {
 
@@ -71,6 +72,10 @@ App = {
             try {
                 App.contracts.postwall = await App.contracts.Postwall.deployed();
                 console.log("Successfully instantiated contract");
+                
+                // Retrieve user info
+                App.currentUser = await App.contracts.postwall.getUser(App.web3Provider.selectedAddress);
+
             } catch (error) {
                 console.error("Unable to fetch deployed contract");
                 console.error(error);
@@ -155,6 +160,40 @@ App = {
             })
             .catch(err => console.log(err.message));
         })
+    },
+
+    toggleFollowing: async function (targetAddress) {
+        try {
+            const follower = App.web3Provider.selectedAddress;
+            const followingsArray = [...await App.contracts.postwall.getFollowings(follower)];
+            const followersArray = [...await App.contracts.postwall.getFollowers(targetAddress)];
+
+            // manipulate following/followed array
+            const indexFollowee = followingsArray.indexOf(targetAddress);
+            if (indexFollowee != -1) {
+                followingsArray.splice(indexFollowee, 1);
+            } else {
+                followingsArray.push(targetAddress);
+            }
+            
+            const indexFollower = followersArray.indexOf(follower);
+            if (indexFollower != -1) {
+                followersArray.splice(indexFollower)
+            } else {
+                followersArray.push(follower);
+            }
+
+            // upload updated arrays onto smartcontract
+            await App.contracts.postwall.updateFollowings(followingsArray, targetAddress, followersArray, {from: follower});
+
+        } catch (error) {
+            console.log("Unable to fetch user following/followed detail");
+            console.log(error);
+        }
+    },
+    
+    followButton: async function() {
+        
     }
 };
 

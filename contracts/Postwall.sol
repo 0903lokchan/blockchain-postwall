@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
@@ -10,7 +11,13 @@ contract Postwall {
         string content;
     }
 
-    mapping (address => bytes32) public users;
+    struct User {
+        bytes username;
+        address[] followings;
+        address[] followers;
+    }
+
+    mapping(address => User) public users;
     Post[] public posts;
     uint postCount;
 
@@ -40,12 +47,35 @@ contract Postwall {
     }
 
     // Register user by username and address
-    function registerUser(bytes32 username) public {
-        users[msg.sender] = username;
+    function createUser(string calldata username) public {
+        users[msg.sender].username = bytes(username);
+    }
+
+    function checkUserRegistered(address userAddress) public view returns (bool) {
+        return (users[userAddress].username.length != 0);
     }
 
     // Get username, if user is unregistered return null
-    function getUsername(address userAddress) public view returns (bytes32 username) {
-        return users[userAddress];
+    function getUser(address userAddress) public view returns (string memory username, address[] memory followings, address[] memory followers) {
+
+        // returns
+        username = string(users[userAddress].username);
+        followings = users[userAddress].followings;
+        followers = users[userAddress].followers;
     }
+    
+    function getFollowings(address userAddress) public view returns (address[] memory followings) {
+        return users[userAddress].followings;
+    }
+    
+    function getFollowers(address userAddress) public view returns (address[] memory followers) {
+        return users[userAddress].followers;
+    }
+    
+    // Update the sender's followings array and the target's followers array
+    function updateFollowings(address[] calldata followingsArray, address followingAddress, address[] calldata followersArray) public {
+        users[msg.sender].followings = followingsArray;
+        users[followingAddress].followers = followersArray;
+    }
+    
 }
